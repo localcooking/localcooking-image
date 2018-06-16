@@ -19,7 +19,7 @@ magickConvert input' output'
   | not (isImageFileName input) = Nothing
   | otherwise =
     let cmd :: Text
-        cmd = "magick convert "
+        cmd = "convert "
             <> input
             <> " -resize '"
             <> T.pack (show totalArea)

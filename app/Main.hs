@@ -12,7 +12,7 @@ main :: IO ()
 main = do
   cliArgs <- execParser opts
   (backend, target) <- execArgs cliArgs
-  server 3000
+  server 3000 backend target
   where
     opts = info (helper <*> args) $ fullDesc <> progDesc desc <> header head'
     desc = "Start the daemon"

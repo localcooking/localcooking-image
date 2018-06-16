@@ -4,16 +4,18 @@
 
 module ImageMagick.Command where
 
+import Data.Image.Source (ImageSource)
 import Data.Monoid ((<>))
 import Data.Text (Text)
 import qualified Data.Text as T
-import System.Process (CreateProcess, shell)
+import System.Process (callCommand)
 
 
 -- | Builds shell command
 magickConvert :: FilePath -- ^ Input file
-              -> Maybe CreateProcess
-magickConvert input'
+              -> ImageSource -- ^ Output file
+              -> Maybe (IO ())
+magickConvert input' output'
   | not (isImageFileName input) = Nothing
   | otherwise =
     let cmd :: Text
@@ -22,9 +24,8 @@ magickConvert input'
             <> " -resize '"
             <> T.pack (show totalArea)
             <> "@' "
-            <> stripSuffix input
-            <> "png"
-    in  Just $ shell $ T.unpack cmd
+            <> output
+    in  Just $ callCommand $ T.unpack cmd
   where
     -- in pixels
     totalArea :: Int
@@ -38,3 +39,6 @@ magickConvert input'
 
     input :: Text
     input = T.pack input'
+
+    output :: Text
+    output = T.pack (show output') <> ".png"

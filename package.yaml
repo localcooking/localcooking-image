@@ -21,11 +21,16 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- localcooking-shared
+- localcooking-db
 - bytestring
 - http-types
+- path
+- persistent
 - process
 - nested-routes >= 9.0.0.1
 - text
+- utf8-string
 - wai
 - wai-extra
 - wai-transformers >= 0.1.0

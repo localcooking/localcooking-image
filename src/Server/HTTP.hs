@@ -16,7 +16,7 @@ import LocalCooking.Database.Query.Image (nextImageSource)
 import qualified Data.Text as T
 import qualified Data.ByteString.UTF8 as BS8
 import qualified Data.ByteString.Lazy as LBS
-import Path (Path, Abs, Dir, toFilePath)
+import Path (Path, Abs, Dir, toFilePath, parseRelFile, (</>))
 import Control.Monad (forM_)
 import Web.Routes.Nested (RouterT, matchHere, o_, textOnly, jsonOnly)
 import Network.Wai (requestHeaders, strictRequestBody)
@@ -41,7 +41,10 @@ httpServer backend target = do
         case magickConvert target fileName' output of
           Nothing -> resp (textOnly "" status404 []) -- shit, wasted a filename
           Just runImageMagick -> do
-            LBS.writeFile fileName' fileContent
-            runImageMagick
-            resp (jsonOnly output status200 [])
+            case parseRelFile fileName' of
+              Nothing -> resp (textOnly "" status400 [])
+              Just fileName'' -> do
+                LBS.writeFile (toFilePath (target </> fileName'')) fileContent
+                runImageMagick
+                resp (jsonOnly output status200 [])
       _ -> resp (textOnly "" status400 [])

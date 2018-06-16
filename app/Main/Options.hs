@@ -53,7 +53,7 @@ args = ArgsImpl
         <> value 3000 <> showDefault
     parseTarget = strOption $
       long "target" <> help "Target directory for image uploads"
-        <> value "/var/www/html/images/"
+        <> value "/var/www/html/image/static/"
     parseDbHost = strOption $
       long "db-host" <> help "Hostname of the PostgreSQL database"
         <> value "localhost" <> showDefault

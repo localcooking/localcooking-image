@@ -9,13 +9,15 @@ import Data.Monoid ((<>))
 import Data.Text (Text)
 import qualified Data.Text as T
 import System.Process (callCommand)
+import Path (Path, Abs, Dir, toFilePath, parseRelFile, (</>))
 
 
 -- | Builds shell command
-magickConvert :: FilePath -- ^ Input file
+magickConvert :: Path Abs Dir -- ^ Common directory
+              -> FilePath -- ^ Input file
               -> ImageSource -- ^ Output file
               -> Maybe (IO ())
-magickConvert input' output'
+magickConvert prefix input' output'
   | not (isImageFileName input) = Nothing
   | otherwise =
     let cmd :: Text
@@ -38,7 +40,9 @@ magickConvert input' output'
     isImageFileName x = T.length (stripSuffix x) >= 2
 
     input :: Text
-    input = T.pack input'
+    input = case parseRelFile input' of
+      Just x -> T.pack $ toFilePath $ prefix </> x
 
     output :: Text
-    output = T.pack (show output') <> ".png"
+    output = case parseRelFile (show output' ++ ".png") of
+      Just x -> T.pack $ toFilePath $ prefix </> x

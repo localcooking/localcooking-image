@@ -38,7 +38,7 @@ httpServer backend target = do
         let fileName' :: FilePath
             fileName' = BS8.toString fileName
         output <- nextImageSource backend
-        case magickConvert fileName' output of
+        case magickConvert target fileName' output of
           Nothing -> resp (textOnly "" status404 []) -- shit, wasted a filename
           Just runImageMagick -> do
             LBS.writeFile fileName' fileContent

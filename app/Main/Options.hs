@@ -68,7 +68,7 @@ args = ArgsImpl
       long "db-name" <> help "Database name for the PostgreSQL pooled connection"
 
 
-execArgs :: ArgsImpl -> IO (ConnectionPool, Path Abs Dir)
+execArgs :: ArgsImpl -> IO (ConnectionPool, Path Abs Dir, Int)
 execArgs ArgsImpl{..} = do
   case parseAbsDir argsImplTarget of
     Nothing -> do
@@ -89,4 +89,4 @@ execArgs ArgsImpl{..} = do
                 , "dbname=" <> T.pack argsImplDbName
                 ]
           backend <- runStderrLoggingT (createPostgresqlPool connStr 10)
-          pure (backend, target)
+          pure (backend, target, argsImplPort)

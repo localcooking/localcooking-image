@@ -11,8 +11,8 @@ import Options.Applicative (Parser, execParser, info, helper, fullDesc, progDesc
 main :: IO ()
 main = do
   cliArgs <- execParser opts
-  (backend, target) <- execArgs cliArgs
-  server 3000 backend target
+  (backend, target, port) <- execArgs cliArgs
+  server port backend target
   where
     opts = info (helper <*> args) $ fullDesc <> progDesc desc <> header head'
     desc = "Start the daemon"

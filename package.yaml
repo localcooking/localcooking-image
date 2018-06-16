@@ -1,0 +1,63 @@
+name:                localcooking-image
+version:             0.0.0
+github:              "githubuser/localcooking-image"
+license:             BSD3
+author:              "Athan Clark"
+maintainer:          "athan.clark@localcooking.com"
+copyright:           "2018 (c) Local Cooking Inc."
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/localcooking-image#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- http-types
+- process
+- nested-routes >= 9.0.0.1
+- text
+- wai
+- wai-extra
+- wai-transformers >= 0.1.0
+- warp
+
+library:
+  source-dirs: src
+
+executables:
+  localcooking-image:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - localcooking-image
+    - directory
+    - monad-logger
+    - optparse-applicative
+    - path
+    - persistent
+    - persistent-postgresql
+
+tests:
+  localcooking-image-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - localcooking-image

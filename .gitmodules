@@ -1,0 +1,9 @@
+[submodule "localcooking-shared"]
+	path = localcooking-shared
+	url = git@git.localcooking.com:localcooking/localcooking-shared.git
+[submodule "localcooking-db"]
+	path = localcooking-db
+	url = git@git.localcooking.com:localcooking/localcooking-db.git
+[submodule "localcooking-fb"]
+	path = localcooking-fb
+	url = git@git.localcooking.com:localcooking/localcooking-fb.git
